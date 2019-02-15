@@ -13,14 +13,7 @@ let scoreData = [
 var apiWSDL = 'https://ics2wstesta.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.151.wsdl'
 // var apiWSDL = 'https://ics2wsa.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.151.wsdl'
 
-var args = {
-  name: 'value'
-}
-
 soap.createClient(apiWSDL, function (err, client) {
-  // client.MyFunction(args, function (err, result) {
-  //   console.log(result);
-  // });
 
   if (err) {
     console.log(err)
@@ -32,24 +25,29 @@ soap.createClient(apiWSDL, function (err, client) {
   // console.log('-----')
 
   var args = {
-    afsService_run: 'true',
     merchantID: 'jiglesias',
     afsService_run: 'true',
     merchantReferenceCode: '2A0373972I4109O61207SX642',
-    billTo_street1: 'Avenida Doutor Augusto de Toledo, 1340',
-    billTo_contry: ' Brasil',
-    billTo_firstName: 'Emerson',
+    item_0_unitPrice: '100.00',
+    billTo_street1: 'Rua Capitao Macedo, 42 - Vila Mariana',
+    billTo_country: 'BR',
+    billTo_city: 'Sao Paulo',
+    billTo_firstName: 'Jairo',
+    billTo_lastName: 'Iglesias',
+    billTo_email: 'jairohighwind@hotmail.com',
   }
 
-  // client.runTransactionAsync(args, (err, result) => {
+  client.runTransactionAsync(args, (err, result) => {
 
-  //   if (err) {
-  //     console.log(err)
-  //     console.log('ERROR TRANSACTION')
-  //     return
-  //   }
+    if (err) {
+      console.log(err)
+      console.log('ERROR TRANSACTION')
+      return
+    }
 
-  // })
+    console.log(result)
+
+  })
 
 });
 
@@ -67,11 +65,7 @@ router.post('/get_score', (req, res) => {
 
 router.post('/analise_risco', (req, res) => {
 
-  // 35
-  // { scoreIni: 35, scoreFim: 59, status: 'aprovado' },
-
   let { scoreUser } = req.body
-  // let scoreUser = 40
 
 
   let score = scoreData.filter(scoreItem => {
